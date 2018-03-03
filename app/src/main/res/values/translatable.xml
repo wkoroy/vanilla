@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <resources>
-	<string name="app_name">Vanilla Music</string>
+	<string name="app_name">Vanilla Music smart switcher </string>
 
 	<!-- Playback Activity (main screen) -->
 	<string name="no_songs">No tracks found on your device.</string>
