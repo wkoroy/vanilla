@@ -1,4 +1,4 @@
-Vanilla Music
+Vanilla Musicsmart switcher
 =====================
 
 Vanilla Music player is a [GPLv3](LICENSE) licensed MP3/OGG/FLAC/PCM player for Android with the following features:
