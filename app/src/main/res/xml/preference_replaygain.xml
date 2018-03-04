@@ -34,7 +34,7 @@ THE SOFTWARE.
 		android:title="@string/replaygain_album_title"
 		android:summary="@string/replaygain_album_summary"
 		android:defaultValue="false" />
-	<ch.blinkenlights.android.vanilla.SeekBarPreference
+	<ru.smartinterestapps.android.vanilla.SeekBarPreference
 		android:key="replaygain_bump"
 		android:negativeButtonText="@null"
 		android:dialogLayout="@layout/seekbar_pref"
@@ -46,7 +46,7 @@ THE SOFTWARE.
 		vanilla:sbpSummaryValueMultiplication="0.2"
 		/>
 		<!-- x0.2 = /5 -->
-	<ch.blinkenlights.android.vanilla.SeekBarPreference
+	<ru.smartinterestapps.android.vanilla.SeekBarPreference
 		android:key="replaygain_untagged_debump"
 		android:negativeButtonText="@null"
 		android:dialogLayout="@layout/seekbar_pref"

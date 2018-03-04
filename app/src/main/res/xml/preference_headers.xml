@@ -22,36 +22,36 @@ THE SOFTWARE.
 -->
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$AudioFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$AudioFragment"
 		android:title="@string/audio" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$PlaybackFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$PlaybackFragment"
 		android:title="@string/playback_screen" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$LibraryFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$LibraryFragment"
 		android:title="@string/library_screen" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$NotificationsFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$NotificationsFragment"
 		android:title="@string/notifications" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$ShakeFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$ShakeFragment"
 		android:title="@string/accelerometer_shake" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$CoverArtFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$CoverArtFragment"
 		android:title="@string/cover_art" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$MiscFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$MiscFragment"
 		android:title="@string/misc_features" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesMediaLibrary"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesMediaLibrary"
 		android:title="@string/media_library" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesTheme"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesTheme"
 		android:title="@string/theme" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$HelpFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$HelpFragment"
 		android:title="@string/help" />
 	<header
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$AboutFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$AboutFragment"
 		android:title="@string/about" />
 </preference-headers>

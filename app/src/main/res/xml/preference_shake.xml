@@ -29,7 +29,7 @@ THE SOFTWARE.
 		android:title="@string/enable_shake_title"
 		android:summary="@string/enable_shake_summary"
 		android:defaultValue="false" />
-	<ch.blinkenlights.android.vanilla.ListPreferenceSummary
+	<ru.smartinterestapps.android.vanilla.ListPreferenceSummary
 		android:key="shake_action"
 		android:title="@string/shake_action_title"
 		android:entries="@array/swipe_action_entries"
@@ -37,7 +37,7 @@ THE SOFTWARE.
 		android:defaultValue="NextSong"
 		android:dependency="enable_shake" />
 	<!-- Might be nice to show something indicating the current shake force for this preference. -->
-	<ch.blinkenlights.android.vanilla.SeekBarPreference
+	<ru.smartinterestapps.android.vanilla.SeekBarPreference
 		android:key="shake_threshold"
 		android:negativeButtonText="@null"
 		android:dialogLayout="@layout/seekbar_pref"

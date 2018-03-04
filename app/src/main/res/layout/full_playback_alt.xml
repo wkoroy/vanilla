@@ -22,7 +22,7 @@ THE SOFTWARE.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:vanilla="http://schemas.android.com/apk/res-auto" >
-	<ch.blinkenlights.android.vanilla.CoverView
+	<ru.smartinterestapps.android.vanilla.CoverView
 		android:id="@+id/cover_view"
 		android:layout_height="fill_parent"
 		android:layout_width="fill_parent" />
@@ -152,7 +152,7 @@ THE SOFTWARE.
 	</TableLayout>
 
 
-	<ch.blinkenlights.android.vanilla.SlidingView
+	<ru.smartinterestapps.android.vanilla.SlidingView
 		android:id="@+id/sliding_view"
 		android:layout_height="fill_parent"
 		android:layout_width="fill_parent"
@@ -169,11 +169,11 @@ THE SOFTWARE.
 				android:elevation="2dp">
 					<include layout="@layout/controls" />
 			</LinearLayout>
-			<fragment class="ch.blinkenlights.android.vanilla.ShowQueueFragment"
+			<fragment class="ru.smartinterestapps.android.vanilla.ShowQueueFragment"
 				android:id="@+id/queue"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent" />
-	</ch.blinkenlights.android.vanilla.SlidingView>
+	</ru.smartinterestapps.android.vanilla.SlidingView>
 
 
 </merge>

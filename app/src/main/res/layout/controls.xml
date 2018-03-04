@@ -22,7 +22,7 @@ THE SOFTWARE.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:vib="http://schemas.android.com/apk/res-auto">
-	<ch.blinkenlights.android.vanilla.VanillaImageButton
+	<ru.smartinterestapps.android.vanilla.VanillaImageButton
 		android:id="@+id/shuffle"
 		android:paddingTop="@dimen/controls_padding"
 		android:paddingBottom="@dimen/controls_padding"
@@ -33,7 +33,7 @@ THE SOFTWARE.
 		android:scaleType="fitCenter"
 		android:src="@drawable/shuffle_inactive"
 		android:contentDescription="@string/cycle_shuffle_mode" />
-	<ch.blinkenlights.android.vanilla.VanillaImageButton
+	<ru.smartinterestapps.android.vanilla.VanillaImageButton
 		android:id="@+id/previous"
 		android:paddingTop="@dimen/controls_padding"
 		android:paddingBottom="@dimen/controls_padding"
@@ -44,7 +44,7 @@ THE SOFTWARE.
 		android:scaleType="fitCenter"
 		android:src="@drawable/previous"
 		android:contentDescription="@string/previous_song" />
-	<ch.blinkenlights.android.vanilla.VanillaImageButton
+	<ru.smartinterestapps.android.vanilla.VanillaImageButton
 		android:id="@+id/play_pause"
 		android:paddingTop="@dimen/controls_padding"
 		android:paddingBottom="@dimen/controls_padding"
@@ -56,7 +56,7 @@ THE SOFTWARE.
 		android:src="@drawable/play"
 		vib:backgroundCircleColor="?background_circle_color"
 		android:contentDescription="@string/play_pause" />
-	<ch.blinkenlights.android.vanilla.VanillaImageButton
+	<ru.smartinterestapps.android.vanilla.VanillaImageButton
 		android:id="@+id/next"
 		android:paddingTop="@dimen/controls_padding"
 		android:paddingBottom="@dimen/controls_padding"
@@ -67,7 +67,7 @@ THE SOFTWARE.
 		android:scaleType="fitCenter"
 		android:src="@drawable/next"
 		android:contentDescription="@string/next_song" />
-	<ch.blinkenlights.android.vanilla.VanillaImageButton
+	<ru.smartinterestapps.android.vanilla.VanillaImageButton
 		android:id="@+id/end_action"
 		android:paddingTop="@dimen/controls_padding"
 		android:paddingBottom="@dimen/controls_padding"

@@ -51,7 +51,7 @@ THE SOFTWARE.
 				android:layout_height="fill_parent" />
 		</HorizontalScrollView>
 	</LinearLayout>
-	<ch.blinkenlights.android.vanilla.SlidingView
+	<ru.smartinterestapps.android.vanilla.SlidingView
 		android:id="@+id/sliding_view"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
@@ -108,8 +108,8 @@ THE SOFTWARE.
 					<include layout="@layout/controls" />
 			</LinearLayout>
 
-			<fragment class="ch.blinkenlights.android.vanilla.ShowQueueFragment"
+			<fragment class="ru.smartinterestapps.android.vanilla.ShowQueueFragment"
 				android:id="@+id/queue"
 				android:layout_width="fill_parent" android:layout_height="fill_parent" />
-	</ch.blinkenlights.android.vanilla.SlidingView>
+	</ru.smartinterestapps.android.vanilla.SlidingView>
 </merge>

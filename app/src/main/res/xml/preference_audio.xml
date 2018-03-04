@@ -25,14 +25,14 @@ THE SOFTWARE.
 	xmlns:vanilla="http://schemas.android.com/apk/res-auto"
 	android:persistent="true">
 	<PreferenceScreen
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$EqualizerFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$EqualizerFragment"
 		android:title="@string/equalizer"
 		android:summary="" />
 	<PreferenceScreen
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$ReplayGainFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$ReplayGainFragment"
 		android:title="@string/replaygain"
 		android:summary="@string/replaygain_summary" />
-	<ch.blinkenlights.android.vanilla.SeekBarPreference
+	<ru.smartinterestapps.android.vanilla.SeekBarPreference
 		android:key="volume_during_ducking"
 		android:dialogLayout="@layout/seekbar_pref"
 		android:title="@string/volume_during_ducking_title"
@@ -64,7 +64,7 @@ THE SOFTWARE.
 		android:defaultValue="true"
 		android:summary="@string/headset_pause_summary" />
 	<PreferenceScreen
-		android:fragment="ch.blinkenlights.android.vanilla.PreferencesActivity$HeadsetLaunchFragment"
+		android:fragment="ru.smartinterestapps.android.vanilla.PreferencesActivity$HeadsetLaunchFragment"
 		android:title="@string/headset_launch_title"
 		android:summary="@string/headset_launch_summary" />
 </PreferenceScreen>

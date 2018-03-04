@@ -9,7 +9,7 @@ android {
     compileSdkVersion 26
 
     defaultConfig {
-        applicationId "ch.blinkenlights.android.vanilla"
+        applicationId "ru.smartinterestapps.android.vanilla"
         minSdkVersion 15
         targetSdkVersion 26
     }

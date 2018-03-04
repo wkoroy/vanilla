@@ -49,7 +49,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ch.blinkenlights.android.vanilla.R;
+import ru.smartinterestapps.android.vanilla.R;
 
 /**
  * ListView subclass that mediates drag and drop resorting of items.

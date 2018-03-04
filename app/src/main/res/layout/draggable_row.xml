@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>. 
 -->
-<ch.blinkenlights.android.vanilla.DraggableRow
+<ru.smartinterestapps.android.vanilla.DraggableRow
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		android:layout_height="@dimen/row_normal_height"
 		android:background="?now_playing_marker" />
 
-	<ch.blinkenlights.android.vanilla.LazyCoverView
+	<ru.smartinterestapps.android.vanilla.LazyCoverView
 		android:id="@+id/cover"
 		android:scaleType="centerCrop"
 		android:layout_width="@dimen/cover_size"
@@ -59,4 +59,4 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		android:scaleType="center"
 		android:layout_width="@dimen/row_normal_height"
 		android:layout_height="@dimen/row_normal_height" />
-</ch.blinkenlights.android.vanilla.DraggableRow>
+</ru.smartinterestapps.android.vanilla.DraggableRow>
