@@ -440,7 +440,10 @@ public final class PlaybackService extends Service
 
 	boolean isproximity  = false;
 	boolean enable_vol_track_select = true;
+	boolean  enable_defer_stop = true;
+	long mLastVolChangeTime=0;
 	int delta = 0;
+
 	@Override
 	public void onCreate()
 	{
@@ -869,12 +872,9 @@ public final class PlaybackService extends Service
 		{
 			if (mSensorManager != null)
 				mSensorManager.unregisterListener(this);
-		} else
-			{
-
-			mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
-
 		}
+		if(enable_defer_stop)
+			 mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
 
 		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),SensorManager.SENSOR_DELAY_NORMAL);
 	}
@@ -2249,6 +2249,8 @@ public final class PlaybackService extends Service
 			else  isproximity =  false;
 		}
 		else
+
+		if (se.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
 		{
 			double x = se.values[0];
 			double y = se.values[1];
@@ -2261,13 +2263,22 @@ public final class PlaybackService extends Service
 			double filtered = mAccelFiltered * 0.9f + delta;
 			mAccelFiltered = filtered;
 
-			if (filtered > mShakeThreshold) {
+			if (filtered > mShakeThreshold && mShakeAction !=Action.Nothing);
+			{
 				long now = SystemClock.elapsedRealtime();
 				if (now - mLastShakeTime > MIN_SHAKE_PERIOD) {
 					mLastShakeTime = now;
 					performAction(mShakeAction, null);
 				}
 			}
+			if (filtered > 3.5  &&  enable_defer_stop) //  отложить заcыпание
+			{
+				mHandler.removeMessages(MSG_FADE_OUT);
+				mHandler.removeMessages(MSG_IDLE_TIMEOUT);
+				if (mIdleTimeout != 0)
+					mHandler.sendEmptyMessageDelayed(MSG_IDLE_TIMEOUT, mIdleTimeout * 1000);
+			}
+			Log.d("ACCEL" , ""+filtered);
 		}
 	}
 
@@ -2471,13 +2482,13 @@ public class SettingsContentObserver extends ContentObserver {
 // и активирована опция переключения треков клавишами регулировки звука
 
 			long now = SystemClock.elapsedRealtime();
-			if (now - mLastShakeTime > MIN_SHAKE_PERIOD * 8)
+			if (now - mLastVolChangeTime > MIN_SHAKE_PERIOD * 8)
 			{
 				// запускаем отдельный    handler , который вернет уровень громкости обратно
 				undo_volume_change();
 
 				delta = previousVolume - currentVolume;
-				mLastShakeTime = now;
+				mLastVolChangeTime = now;
 				if (delta > 0) {
 					performAction(Action.NextSong, null); // переключение трека на следующий
 
@@ -2495,8 +2506,6 @@ public class SettingsContentObserver extends ContentObserver {
 
 		}else delta=0;
 	}
-
-
 }
 
 void undo_volume_change()
