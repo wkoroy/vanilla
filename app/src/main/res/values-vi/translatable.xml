@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Vanilla Music</string>
+  <string name="app_name">Vanilla Music smart switcher</string>
   <!--Playback Activity (main screen)-->
   <string name="no_songs">Không tìm thấy bài hát nào trên máy.</string>
   <string name="empty_queue">Chưa chọn bài hát nào. Hãy chọn bài hát từ thư viện nhạc hoặc chạm vào dòng chữ này để phát ngẫu nhiên các bài hát.</string>

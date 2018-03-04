@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Vanilla Music</string>
+  <string name="app_name">Vanilla Music smart switcher</string>
   <!--Playback Activity (main screen)-->
   <string name="no_songs">Não foram encontradas faixas.</string>
   <string name="empty_queue">Não selecionou as faixas. Escolha algumas da sua coleção ou ative o modo aleatório tocando nesta mensagem.</string>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Vanilla Music</string>
+  <string name="app_name">Vanilla Music smart switcher</string>
   <!--Playback Activity (main screen)-->
   <string name="no_songs">在你的设备上找不到任何曲目。</string>
   <string name="empty_queue">未选择曲目。请从库中选择一些曲目或点此消息进入随机模式。</string>

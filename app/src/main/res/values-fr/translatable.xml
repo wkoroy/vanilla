@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Vanilla Music</string>
+  <string name="app_name">Vanilla Music smart switcher</string>
   <!--Playback Activity (main screen)-->
   <string name="no_songs">Aucun morceau trouvé sur votre appareil.</string>
   <string name="empty_queue">Aucun morceau sélectionné. Choisissez-en un depuis la bibliothèque ou activez le mode aléatoire en cliquant sur ce message.</string>

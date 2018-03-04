@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Vanilla Music</string>
+  <string name="app_name">Vanilla Music smart switcher</string>
   <!--Playback Activity (main screen)-->
   <string name="settings">Ustawienia</string>
   <string name="no_shuffle">Brak losowego odtwarzania utworów</string>

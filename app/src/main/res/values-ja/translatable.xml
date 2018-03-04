@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Vanilla Music</string>
+  <string name="app_name">Vanilla Music smart switcher</string>
   <!--Playback Activity (main screen)-->
   <string name="no_songs">お使いのデバイス上でトラックが見つかりませんでした。</string>
   <string name="empty_queue">トラックが選択されていません。ライブラリーから選択するか、このメッセージをタップしてランダムモードに入ります。</string>
