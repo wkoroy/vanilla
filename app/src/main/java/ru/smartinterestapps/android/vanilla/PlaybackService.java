@@ -21,9 +21,9 @@
  * THE SOFTWARE.
  */
 
-package ch.blinkenlights.android.vanilla;
+package ru.smartinterestapps.android.vanilla;
 
-import ch.blinkenlights.android.medialibrary.MediaLibrary;
+import ru.smartinterestapps.android.medialibrary.MediaLibrary;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -46,6 +46,7 @@ import android.hardware.SensorManager;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -68,6 +69,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -436,6 +438,9 @@ public final class PlaybackService extends Service
 	 */
 	private BastpUtil mBastpUtil;
 
+	boolean isproximity  = false;
+	boolean enable_vol_track_select = true;
+	int delta = 0;
 	@Override
 	public void onCreate()
 	{
@@ -522,6 +527,10 @@ public final class PlaybackService extends Service
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			ScheduledLibraryUpdate.scheduleUpdate(this);
 		}
+
+// for a catch volume change
+		SettingsContentObserver mSettingsContentObserver = new SettingsContentObserver(this, new Handler());
+		getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver);
 	}
 
 	@Override
@@ -853,14 +862,21 @@ public final class PlaybackService extends Service
 	 */
 	private void setupSensor()
 	{
-		if (mShakeAction == Action.Nothing) {
+		if (mSensorManager == null)
+			mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+
+		if (mShakeAction == Action.Nothing)
+		{
 			if (mSensorManager != null)
 				mSensorManager.unregisterListener(this);
-		} else {
-			if (mSensorManager == null)
-				mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+		} else
+			{
+
 			mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
+
 		}
+
+		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),SensorManager.SENSOR_DELAY_NORMAL);
 	}
 
 
@@ -2226,22 +2242,31 @@ public final class PlaybackService extends Service
 	@Override
 	public void onSensorChanged(SensorEvent se)
 	{
-		double x = se.values[0];
-		double y = se.values[1];
-		double z = se.values[2];
 
-		double accel = Math.sqrt(x*x + y*y + z*z);
-		double delta = accel - mAccelLast;
-		mAccelLast = accel;
+		if (se.sensor.getType() == Sensor.TYPE_PROXIMITY)
+		{
+			if( se.values[0] == 0)isproximity =  true;
+			else  isproximity =  false;
+		}
+		else
+		{
+			double x = se.values[0];
+			double y = se.values[1];
+			double z = se.values[2];
 
-		double filtered = mAccelFiltered * 0.9f + delta;
-		mAccelFiltered = filtered;
+			double accel = Math.sqrt(x * x + y * y + z * z);
+			double delta = accel - mAccelLast;
+			mAccelLast = accel;
 
-		if (filtered > mShakeThreshold) {
-			long now = SystemClock.elapsedRealtime();
-			if (now - mLastShakeTime > MIN_SHAKE_PERIOD) {
-				mLastShakeTime = now;
-				performAction(mShakeAction, null);
+			double filtered = mAccelFiltered * 0.9f + delta;
+			mAccelFiltered = filtered;
+
+			if (filtered > mShakeThreshold) {
+				long now = SystemClock.elapsedRealtime();
+				if (now - mLastShakeTime > MIN_SHAKE_PERIOD) {
+					mLastShakeTime = now;
+					performAction(mShakeAction, null);
+				}
 			}
 		}
 	}
@@ -2415,5 +2440,105 @@ public final class PlaybackService extends Service
 	public void removeSongPosition(int which) {
 		mTimeline.removeSongPosition(which);
 	}
+
+//   for a catch volume change
+public class SettingsContentObserver extends ContentObserver {
+	int previousVolume;
+	Context context;
+	int prevdelta=0;
+
+	public SettingsContentObserver(Context c, Handler handler) {
+		super(handler);
+		context = c;
+
+		AudioManager audio = mAudioManager;
+		previousVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+	}
+
+	@Override
+	public boolean deliverSelfNotifications() {
+		return super.deliverSelfNotifications();
+	}
+
+	@Override
+	public void onChange(boolean selfChange) {
+		super.onChange(selfChange);
+
+		AudioManager audio = mAudioManager;
+		int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+		if(isproximity && enable_vol_track_select) { // isproximity , enable_vol_track_select - признаки что сработал датчик приближения
+// и активирована опция переключения треков клавишами регулировки звука
+
+			long now = SystemClock.elapsedRealtime();
+			if (now - mLastShakeTime > MIN_SHAKE_PERIOD * 8)
+			{
+				// запускаем отдельный    handler , который вернет уровень громкости обратно
+				undo_volume_change();
+
+				delta = previousVolume - currentVolume;
+				mLastShakeTime = now;
+				if (delta > 0) {
+					performAction(Action.NextSong, null); // переключение трека на следующий
+
+					previousVolume = currentVolume;
+				} else if (delta <= 0) {
+					performAction(Action.PreviousSong, null); // переключение трека на предыдущий
+					previousVolume = currentVolume;
+				}
+
+				prevdelta = delta;
+			} else {
+				int difvol = currentVolume - audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+				previousVolume = difvol + currentVolume;
+			}
+
+		}else delta=0;
+	}
+
+
+}
+
+void undo_volume_change()
+{
+ //  undo volume change afer next-prev comand
+	android.os.Handler h = new Handler() {
+		int currentVolume;
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what)
+			{
+				case 1:
+					currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+				break;
+				case 2:
+					if(isproximity)
+					{
+						if(mMediaPlayer.isPlaying()    )
+						{
+							if(Math.abs(delta)==1)
+							{
+								mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume + delta, AudioManager.FLAG_SHOW_UI);
+								Log.d("PLEER", " setStreamVolume  Volume=" + String.valueOf(currentVolume));
+							}
+
+						}
+					}
+					else
+					{
+						delta=0;
+						currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+					}
+					break;
+
+			}
+
+		};
+	};
+	h.sendEmptyMessage(1);
+	h.sendEmptyMessageDelayed(2,1000);
+
+}
+
 
 }
