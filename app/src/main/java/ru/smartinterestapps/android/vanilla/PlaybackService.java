@@ -450,6 +450,9 @@ public final class PlaybackService extends Service
 	boolean  enable_defer_stop = true;
 	long mLastVolChangeTime=0;
 	int delta = 0;
+	 boolean event_down_max_vol = false;
+	// for a catch volume change
+	SettingsContentObserver mSettingsContentObserver;
 
 	@Override
 	public void onCreate()
@@ -490,6 +493,7 @@ public final class PlaybackService extends Service
 
 
 		enable_vol_track_select = settings.getBoolean(PrefKeys.VOLUME_SWITCH_TRACK, PrefDefaults.VOLUME_SWITCH_TRACK);
+		//set_NoMAX_VOL();
 		enable_defer_stop = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT);
 		mIdleNoactiveTimeout  = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT) ? settings.getInt(PrefKeys.IDLE_NOACTIVE_TIMEOUT, PrefDefaults.IDLE_NOACTIVE_TIMEOUT) : 0;
 
@@ -547,8 +551,23 @@ public final class PlaybackService extends Service
 		}
 
 // for a catch volume change
-		SettingsContentObserver mSettingsContentObserver = new SettingsContentObserver(this, new Handler());
+     mSettingsContentObserver = new SettingsContentObserver(this, new Handler());
 		getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver);
+	}
+
+	private void set_NoMAX_VOL() {
+		if(enable_vol_track_select)
+		{
+
+			final int MAX_MUSIC_VOLUME =15;
+			AudioManager audio = mAudioManager;
+			int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+			if( currentVolume ==  MAX_MUSIC_VOLUME)
+			{
+				event_down_max_vol = true;
+				mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume -1, AudioManager.FLAG_SHOW_UI);
+			}
+		}
 	}
 
 	@Override
@@ -2275,7 +2294,12 @@ public final class PlaybackService extends Service
 
 		if (se.sensor.getType() == Sensor.TYPE_PROXIMITY)
 		{
-			if( se.values[0] == 0)isproximity =  true;
+			if( se.values[0] == 0){
+				isproximity =  true;
+
+				set_NoMAX_VOL();
+
+			}
 			else  isproximity =  false;
 		}
 		else
@@ -2510,7 +2534,7 @@ public class SettingsContentObserver extends ContentObserver {
 		AudioManager audio = mAudioManager;
 		int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
 
-		if(isproximity && enable_vol_track_select) { // isproximity , enable_vol_track_select - признаки что сработал датчик приближения
+		if(isproximity && enable_vol_track_select && !event_down_max_vol) { // isproximity , enable_vol_track_select - признаки что сработал датчик приближения
 // и активирована опция переключения треков клавишами регулировки звука
 
 			long now = SystemClock.elapsedRealtime();
@@ -2537,6 +2561,8 @@ public class SettingsContentObserver extends ContentObserver {
 			}
 
 		}else delta=0;
+
+		event_down_max_vol =false;
 	}
 }
 
