@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Vanilla Music smart switcher</string>
+  <string name="app_name">Vanilla  smart switch player</string>
   <!--Playback Activity (main screen)-->
   <string name="no_songs">Nenalezeny žádné skladby na tomto přístroji.</string>
   <string name="empty_queue">Žádné vybrané skladby. Vyberte nějaké ze své sbírky, nebo vyberte náhodný mód ťuknutím na tuto zprávu.</string>

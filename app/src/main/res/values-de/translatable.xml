@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Vanilla Music smart switcher</string>
+  <string name="app_name">Vanilla  smart switch player</string>
   <!--Playback Activity (main screen)-->
   <string name="no_songs">Keine Titel auf Ihrem Gerät gefunden.</string>
   <string name="empty_queue">Keine Titel ausgewählt. Wählen Sie einige aus der Bibliothek oder starten Sie die Zufallswiedergabe durch Antippen dieser Nachricht.</string>

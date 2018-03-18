@@ -29,21 +29,21 @@ THE SOFTWARE.
 		android:layout_height="wrap_content"
 		android:defaultValue="false"
 		android:key="proximity_switch_track"
-		android:summary="Переключать на следующий трек при  проведении рукой близко  над верхней частью смартфона над датчиком приближения"
+		android:summary="Переключать на следующий трек при  проведении рукой близко  над верхней частью смартфона (над датчиком приближения)"
 		android:title="Переключение треков  проведением руки над смартфоном" />
 	<CheckBoxPreference
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:defaultValue="true"
 		android:key="volume_switch_track"
-		android:summary="Переключение треков при помощи клавиш кромкости + следующий трек , -  предыдущий"
+		android:summary="Переключение треков при помощи клавиш кромкости (-) следующий трек , (+)  предыдущий"
 		android:title="Переключение треков громкостью" />
 	<CheckBoxPreference
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:defaultValue="false"
 		android:key="use_idle_timeout_ifnoactive"
-		android:summary="Останавливать воспороизведение через заданное время если смартфон не брали в руки или не ходили/не бегали с ним"
+		android:summary="Останавливать воспороизведение через заданное время, если смартфон не брали в руки или не ходили/не бегали с ним"
 		android:title="Задействовать таймер неактивности" />
 	<ru.smartinterestapps.android.vanilla.IdlePreference
 		android:id="@+id/idle_noact_Preference"
