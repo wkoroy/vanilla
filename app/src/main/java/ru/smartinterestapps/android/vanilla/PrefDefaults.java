@@ -31,6 +31,11 @@ public class PrefDefaults {
 	public static final String  DEFAULT_ACTION_INT = "6";
 	public static final String  DEFAULT_PLAYLIST_ACTION = "0";
 	public static final boolean COVERLOADER_ANDROID = true;
+
+	public static final boolean VOLUME_SWITCH_TRACK = true;
+	public static final boolean USE_IDLE_NOACTIVE_TIMEOUT = false;
+	public static final int     IDLE_NOACTIVE_TIMEOUT = 3600;
+
 	public static final boolean COVERLOADER_VANILLA = true;
 	public static final boolean COVERLOADER_SHADOW = true;
 	public static final boolean COVER_ON_LOCKSCREEN = true;

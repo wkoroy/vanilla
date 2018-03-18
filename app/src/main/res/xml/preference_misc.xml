@@ -25,6 +25,28 @@ THE SOFTWARE.
 	xmlns:vanilla="http://schemas.android.com/apk/res-auto"
 	android:persistent="true">
 	<CheckBoxPreference
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:defaultValue="true"
+		android:key="volume_switch_track"
+		android:summary="Переключение треков при помощи клавиш кромкости + следующий трек , -  предыдущий"
+		android:title="Переключение треков громкостью" />
+	<CheckBoxPreference
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:defaultValue="false"
+		android:key="use_idle_timeout_ifnoactive"
+		android:summary="Останавливать воспороизведение через заданное время если смартфон не брали в руки или не ходили/не бегали с ним"
+		android:title="Задействовать таймер неактивности" />
+	<ru.smartinterestapps.android.vanilla.IdlePreference
+		android:id="@+id/idle_noact_Preference"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:dependency="use_idle_timeout_ifnoactive"
+		android:dialogLayout="@layout/seekbar_pref"
+		android:key="idle_timeout_ifnoactive"
+		android:title="@string/idle_timeout_title" />
+	<CheckBoxPreference
 		android:key="disable_lockscreen"
 		android:title="@string/disable_lockscreen_title"
 		android:summary="@string/disable_lockscreen_summary"
@@ -40,10 +62,10 @@ THE SOFTWARE.
 		android:summary="@string/use_idle_timeout_summary"
 		android:defaultValue="false" />
 	<ru.smartinterestapps.android.vanilla.IdlePreference
-		android:key="idle_timeout"
-		android:title="@string/idle_timeout_title"
+		android:dependency="use_idle_timeout"
 		android:dialogLayout="@layout/seekbar_pref"
-		android:dependency="use_idle_timeout" />
+		android:key="idle_timeout"
+		android:title="@string/idle_timeout_title" />
 	<CheckBoxPreference
 		android:key="double_tap"
 		android:title="@string/double_tap_title"

@@ -324,6 +324,13 @@ public final class PlaybackService extends Service
 	 * The time to wait before considering the player idle.
 	 */
 	private int mIdleTimeout;
+
+
+	/**
+	 * The time to wait before considering the player idle.
+	 */
+	private int mIdleNoactiveTimeout;
+
 	/**
 	 * The intent for the notification to execute, created by
 	 * {@link PlaybackService#createNotificationAction(SharedPreferences)}.
@@ -479,6 +486,14 @@ public final class PlaybackService extends Service
 		mHeadsetOnly = settings.getBoolean(PrefKeys.HEADSET_ONLY, PrefDefaults.HEADSET_ONLY);
 		mStockBroadcast = settings.getBoolean(PrefKeys.STOCK_BROADCAST, PrefDefaults.STOCK_BROADCAST);
 		mNotificationAction = createNotificationAction(settings);
+
+
+
+		enable_vol_track_select = settings.getBoolean(PrefKeys.VOLUME_SWITCH_TRACK, PrefDefaults.VOLUME_SWITCH_TRACK);
+		enable_defer_stop = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT);
+		mIdleNoactiveTimeout  = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT) ? settings.getInt(PrefKeys.IDLE_NOACTIVE_TIMEOUT, PrefDefaults.IDLE_NOACTIVE_TIMEOUT) : 0;
+
+
 		mHeadsetPause = getSettings(this).getBoolean(PrefKeys.HEADSET_PAUSE, PrefDefaults.HEADSET_PAUSE);
 		mShakeAction = settings.getBoolean(PrefKeys.ENABLE_SHAKE, PrefDefaults.ENABLE_SHAKE) ? Action.getAction(settings, PrefKeys.SHAKE_ACTION, PrefDefaults.SHAKE_ACTION) : Action.Nothing;
 		mShakeThreshold = settings.getInt(PrefKeys.SHAKE_THRESHOLD, PrefDefaults.SHAKE_THRESHOLD) / 10.0f;
@@ -883,9 +898,17 @@ public final class PlaybackService extends Service
 	private void loadPreference(String key)
 	{
 		SharedPreferences settings = getSettings(this);
-		if (PrefKeys.HEADSET_PAUSE.equals(key)) {
+		if (PrefKeys.VOLUME_SWITCH_TRACK.equals(key)) {
+			enable_vol_track_select = settings.getBoolean(PrefKeys.VOLUME_SWITCH_TRACK, PrefDefaults.VOLUME_SWITCH_TRACK);
+		}
+		else if (PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT.equals(key) || PrefKeys.IDLE_NOACTIVE_TIMEOUT.equals(key)) {
+			mIdleNoactiveTimeout  = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT) ? settings.getInt(PrefKeys.IDLE_NOACTIVE_TIMEOUT, PrefDefaults.IDLE_NOACTIVE_TIMEOUT) : 0;
+			userActionTriggered();
+		}
+		//////////////////////////////////////////
+		else if (PrefKeys.HEADSET_PAUSE.equals(key)) {
 			mHeadsetPause = settings.getBoolean(PrefKeys.HEADSET_PAUSE, PrefDefaults.HEADSET_PAUSE);
-		} else if (PrefKeys.NOTIFICATION_ACTION.equals(key)) {
+		} else  if (PrefKeys.NOTIFICATION_ACTION.equals(key)) {
 			mNotificationAction = createNotificationAction(settings);
 			updateNotification();
 		} else if (PrefKeys.NOTIFICATION_VISIBILITY.equals(key)){
@@ -2275,7 +2298,7 @@ public final class PlaybackService extends Service
 			{
 				mHandler.removeMessages(MSG_FADE_OUT);
 				mHandler.removeMessages(MSG_IDLE_TIMEOUT);
-				if (mIdleTimeout != 0)
+				if (mIdleNoactiveTimeout != 0)
 					mHandler.sendEmptyMessageDelayed(MSG_IDLE_TIMEOUT, mIdleTimeout * 1000);
 			}
 			Log.d("ACCEL" , ""+filtered);

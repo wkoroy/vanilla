@@ -27,6 +27,10 @@ package ru.smartinterestapps.android.vanilla;
  * SharedPreference keys. Must be kept in sync with {@link PrefDefaults}.
  */
 public class PrefKeys {
+	public static final String VOLUME_SWITCH_TRACK = "volume_switch_track";
+	public static final String USE_IDLE_NOACTIVE_TIMEOUT = "use_idle_timeout_ifnoactive";
+	public static final String IDLE_NOACTIVE_TIMEOUT = "idle_timeout_ifnoactive";
+
 	public static final String COVER_LONGPRESS_ACTION = "cover_longpress_action";
 	public static final String COVER_PRESS_ACTION = "cover_press_action";
 	public static final String DEFAULT_ACTION_INT = "default_action_int";
