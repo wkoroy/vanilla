@@ -446,9 +446,13 @@ public final class PlaybackService extends Service
 	private BastpUtil mBastpUtil;
 
 	boolean isproximity  = false;
+	boolean prev_isproximity  = false;
+
 	boolean enable_vol_track_select = true;
 	boolean  enable_defer_stop = true;
+	boolean enable_proximity_track_next = true;
 	long mLastVolChangeTime=0;
+	long mLastProximityChangeTime=0;
 	int delta = 0;
 	 boolean event_down_max_vol = false;
 	// for a catch volume change
@@ -492,6 +496,7 @@ public final class PlaybackService extends Service
 
 
 
+		enable_proximity_track_next = settings.getBoolean(PrefKeys.PROXIMITY_SWITCH_TRACK, PrefDefaults.PROXIMITY_SWITCH_TRACK);
 		enable_vol_track_select = settings.getBoolean(PrefKeys.VOLUME_SWITCH_TRACK, PrefDefaults.VOLUME_SWITCH_TRACK);
 		//set_NoMAX_VOL();
 		enable_defer_stop = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT);
@@ -915,7 +920,7 @@ public final class PlaybackService extends Service
 
 
 	private void loadPreference(String key)
-	{
+	{ //enable_proximity_track_next = settings.getBoolean(PrefKeys.PROXIMITY_SWITCH_TRACK, PrefDefaults.PROXIMITY_SWITCH_TRACK);
 		SharedPreferences settings = getSettings(this);
 		if (PrefKeys.VOLUME_SWITCH_TRACK.equals(key)) {
 			enable_vol_track_select = settings.getBoolean(PrefKeys.VOLUME_SWITCH_TRACK, PrefDefaults.VOLUME_SWITCH_TRACK);
@@ -924,6 +929,9 @@ public final class PlaybackService extends Service
 			 enable_defer_stop = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT);
 			 mIdleNoactiveTimeout  = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT) ? settings.getInt(PrefKeys.IDLE_NOACTIVE_TIMEOUT, PrefDefaults.IDLE_NOACTIVE_TIMEOUT) : 0;
 			userActionTriggered();
+		}
+		else if (PrefKeys.PROXIMITY_SWITCH_TRACK.equals(key) ) {
+			enable_proximity_track_next = settings.getBoolean(PrefKeys.PROXIMITY_SWITCH_TRACK, PrefDefaults.PROXIMITY_SWITCH_TRACK);
 		}
 		//////////////////////////////////////////
 		else if (PrefKeys.HEADSET_PAUSE.equals(key)) {
@@ -2301,6 +2309,24 @@ public final class PlaybackService extends Service
 
 			}
 			else  isproximity =  false;
+
+			// переключение при помощи нажатия на  сенсор приближения
+			if(enable_proximity_track_next)
+			{
+			    if(isproximity!= prev_isproximity)
+				{
+					long now = SystemClock.elapsedRealtime();
+					if (now - mLastProximityChangeTime > MIN_SHAKE_PERIOD )
+					{
+						if(isproximity)
+						{
+							performAction(Action.NextSong, null); // переключение трека на следующий
+						}
+					}
+				}
+			}
+			prev_isproximity =  isproximity;
+			mLastProximityChangeTime = SystemClock.elapsedRealtime();;
 		}
 		else
 
