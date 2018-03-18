@@ -902,7 +902,8 @@ public final class PlaybackService extends Service
 			enable_vol_track_select = settings.getBoolean(PrefKeys.VOLUME_SWITCH_TRACK, PrefDefaults.VOLUME_SWITCH_TRACK);
 		}
 		else if (PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT.equals(key) || PrefKeys.IDLE_NOACTIVE_TIMEOUT.equals(key)) {
-			mIdleNoactiveTimeout  = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT) ? settings.getInt(PrefKeys.IDLE_NOACTIVE_TIMEOUT, PrefDefaults.IDLE_NOACTIVE_TIMEOUT) : 0;
+			 enable_defer_stop = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT);
+			 mIdleNoactiveTimeout  = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT) ? settings.getInt(PrefKeys.IDLE_NOACTIVE_TIMEOUT, PrefDefaults.IDLE_NOACTIVE_TIMEOUT) : 0;
 			userActionTriggered();
 		}
 		//////////////////////////////////////////
@@ -1824,6 +1825,12 @@ public final class PlaybackService extends Service
 		if (mIdleTimeout != 0)
 			mHandler.sendEmptyMessageDelayed(MSG_IDLE_TIMEOUT, mIdleTimeout * 1000);
 
+		if (mIdleNoactiveTimeout != 0){
+			mHandler.removeMessages(MSG_IDLE_TIMEOUT);
+			mHandler.sendEmptyMessageDelayed(MSG_IDLE_TIMEOUT, mIdleNoactiveTimeout * 1000);
+		}
+
+
 		if (mFadeOut != 1.0f) {
 			mFadeOut = 1.0f;
 			refreshReplayGainValues();
@@ -2299,9 +2306,11 @@ public final class PlaybackService extends Service
 				mHandler.removeMessages(MSG_FADE_OUT);
 				mHandler.removeMessages(MSG_IDLE_TIMEOUT);
 				if (mIdleNoactiveTimeout != 0)
-					mHandler.sendEmptyMessageDelayed(MSG_IDLE_TIMEOUT, mIdleTimeout * 1000);
+					mHandler.sendEmptyMessageDelayed(MSG_IDLE_TIMEOUT, mIdleNoactiveTimeout * 1000);
+
+				Log.d("ACCEL" , ""+filtered);
 			}
-			Log.d("ACCEL" , ""+filtered);
+
 		}
 	}
 
