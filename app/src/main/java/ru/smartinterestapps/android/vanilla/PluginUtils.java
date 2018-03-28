@@ -33,23 +33,23 @@ public class PluginUtils {
     }
 
     // these actions are for passing between main player and plugins
-    public static final String ACTION_REQUEST_PLUGIN_PARAMS = "ch.blinkenlights.android.vanilla.action.REQUEST_PLUGIN_PARAMS"; // broadcast
-    public static final String ACTION_HANDLE_PLUGIN_PARAMS = "ch.blinkenlights.android.vanilla.action.HANDLE_PLUGIN_PARAMS"; // answer
-    public static final String ACTION_WAKE_PLUGIN = "ch.blinkenlights.android.vanilla.action.WAKE_PLUGIN"; // targeted at each found
-    public static final String ACTION_LAUNCH_PLUGIN = "ch.blinkenlights.android.vanilla.action.LAUNCH_PLUGIN"; // targeted at selected by user
+    public static final String ACTION_REQUEST_PLUGIN_PARAMS = "ru.smartinterestapps.android.vanilla.action.REQUEST_PLUGIN_PARAMS"; // broadcast
+    public static final String ACTION_HANDLE_PLUGIN_PARAMS = "ru.smartinterestapps.android.vanilla.action.HANDLE_PLUGIN_PARAMS"; // answer
+    public static final String ACTION_WAKE_PLUGIN = "ru.smartinterestapps.android.vanilla.action.WAKE_PLUGIN"; // targeted at each found
+    public static final String ACTION_LAUNCH_PLUGIN = "ru.smartinterestapps.android.vanilla.action.LAUNCH_PLUGIN"; // targeted at selected by user
 
     // these are used by plugins to describe themselves
-    public static final String EXTRA_PARAM_PLUGIN_NAME = "ch.blinkenlights.android.vanilla.extra.PLUGIN_NAME";
-    public static final String EXTRA_PARAM_PLUGIN_APP = "ch.blinkenlights.android.vanilla.extra.PLUGIN_APP";
-    public static final String EXTRA_PARAM_PLUGIN_DESC = "ch.blinkenlights.android.vanilla.extra.PLUGIN_DESC";
+    public static final String EXTRA_PARAM_PLUGIN_NAME = "ru.smartinterestapps.android.vanilla.extra.PLUGIN_NAME";
+    public static final String EXTRA_PARAM_PLUGIN_APP = "ru.smartinterestapps.android.vanilla.extra.PLUGIN_APP";
+    public static final String EXTRA_PARAM_PLUGIN_DESC = "ru.smartinterestapps.android.vanilla.extra.PLUGIN_DESC";
 
     // this is passed to plugin when it is selected by user
-    public static final String EXTRA_PARAM_URI = "ch.blinkenlights.android.vanilla.extra.URI";
-    public static final String EXTRA_PARAM_SONG_TITLE = "ch.blinkenlights.android.vanilla.extra.SONG_TITLE";
-    public static final String EXTRA_PARAM_SONG_ALBUM = "ch.blinkenlights.android.vanilla.extra.SONG_ALBUM";
-    public static final String EXTRA_PARAM_SONG_ARTIST = "ch.blinkenlights.android.vanilla.extra.SONG_ARTIST";
+    public static final String EXTRA_PARAM_URI = "ru.smartinterestapps.android.vanilla.extra.URI";
+    public static final String EXTRA_PARAM_SONG_TITLE = "ru.smartinterestapps.android.vanilla.extra.SONG_TITLE";
+    public static final String EXTRA_PARAM_SONG_ALBUM = "ru.smartinterestapps.android.vanilla.extra.SONG_ALBUM";
+    public static final String EXTRA_PARAM_SONG_ARTIST = "ru.smartinterestapps.android.vanilla.extra.SONG_ARTIST";
 
-    static final String EXTRA_PLUGIN_MAP = "ch.blinkenlights.android.vanilla.internal.extra.PLUGIN_MAP";
+    static final String EXTRA_PLUGIN_MAP = "ru.smartinterestapps.android.vanilla.internal.extra.PLUGIN_MAP";
 
     public static boolean checkPlugins(Context ctx) {
         List<ResolveInfo> resolved = ctx.getPackageManager().queryBroadcastReceivers(new Intent(ACTION_REQUEST_PLUGIN_PARAMS), 0);

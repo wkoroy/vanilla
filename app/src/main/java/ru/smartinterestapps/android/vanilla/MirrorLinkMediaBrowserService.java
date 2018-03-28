@@ -55,9 +55,9 @@ public class MirrorLinkMediaBrowserService extends MediaBrowserService
 
 	private static final String TAG = "MirrorLinkMediaBrowserService";
 	// Action to change the repeat mode
-	private static final String CUSTOM_ACTION_REPEAT = "ch.blinkenlights.android.vanilla.REPEAT";
+	private static final String CUSTOM_ACTION_REPEAT = "ru.smartinterestapps.android.vanilla.REPEAT";
 	// Action to change the repeat mode
-	private static final String CUSTOM_ACTION_SHUFFLE = "ch.blinkenlights.android.vanilla.SHUFFLE";
+	private static final String CUSTOM_ACTION_SHUFFLE = "ru.smartinterestapps.android.vanilla.SHUFFLE";
 
 	// Media managers
 	private MediaAdapter mArtistAdapter;
@@ -107,7 +107,7 @@ public class MirrorLinkMediaBrowserService extends MediaBrowserService
 					.setMediaId(Integer.toString(MediaUtils.TYPE_ARTIST))
 					.setTitle(getString(R.string.artists))
 					.setIconUri(Uri.parse("android.resource://" +
-							"ch.blinkenlights.android.vanilla/drawable/ic_menu_music_library"))
+							"ru.smartinterestapps.android.vanilla/drawable/ic_menu_music_library"))
 					.setSubtitle(getString(R.string.artists))
 					.build(), MediaBrowser.MediaItem.FLAG_BROWSABLE
 		));
@@ -117,7 +117,7 @@ public class MirrorLinkMediaBrowserService extends MediaBrowserService
 					.setMediaId(Integer.toString(MediaUtils.TYPE_ALBUM))
 					.setTitle(getString(R.string.albums))
 					.setIconUri(Uri.parse("android.resource://" +
-							"ch.blinkenlights.android.vanilla/drawable/ic_menu_music_library"))
+							"ru.smartinterestapps.android.vanilla/drawable/ic_menu_music_library"))
 					.setSubtitle(getString(R.string.albums))
 					.build(), MediaBrowser.MediaItem.FLAG_BROWSABLE
 		));
@@ -127,7 +127,7 @@ public class MirrorLinkMediaBrowserService extends MediaBrowserService
 					.setMediaId(Integer.toString(MediaUtils.TYPE_SONG))
 					.setTitle(getString(R.string.songs))
 					.setIconUri(Uri.parse("android.resource://" +
-							"ch.blinkenlights.android.vanilla/drawable/ic_menu_music_library"))
+							"ru.smartinterestapps.android.vanilla/drawable/ic_menu_music_library"))
 					.setSubtitle(getString(R.string.songs))
 					.build(), MediaBrowser.MediaItem.FLAG_BROWSABLE
 		));
@@ -137,7 +137,7 @@ public class MirrorLinkMediaBrowserService extends MediaBrowserService
 					.setMediaId(Integer.toString(MediaUtils.TYPE_GENRE))
 					.setTitle(getString(R.string.genres))
 					.setIconUri(Uri.parse("android.resource://" +
-							"ch.blinkenlights.android.vanilla/drawable/ic_menu_music_library"))
+							"ru.smartinterestapps.android.vanilla/drawable/ic_menu_music_library"))
 					.setSubtitle(getString(R.string.genres))
 					.build(), MediaBrowser.MediaItem.FLAG_BROWSABLE
 		));
@@ -147,7 +147,7 @@ public class MirrorLinkMediaBrowserService extends MediaBrowserService
 					.setMediaId(Integer.toString(MediaUtils.TYPE_PLAYLIST))
 					.setTitle(getString(R.string.playlists))
 					.setIconUri(Uri.parse("android.resource://" +
-							"ch.blinkenlights.android.vanilla/drawable/ic_menu_music_library"))
+							"ru.smartinterestapps.android.vanilla/drawable/ic_menu_music_library"))
 					.setSubtitle(getString(R.string.playlists))
 					.build(), MediaBrowser.MediaItem.FLAG_BROWSABLE
 		));

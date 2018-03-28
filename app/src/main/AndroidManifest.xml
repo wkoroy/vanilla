@@ -145,11 +145,11 @@ THE SOFTWARE.
 		</receiver>
 		<service android:name="ru.smartinterestapps.android.vanilla.PlaybackService">
 			<intent-filter>
-				<action android:name="ch.blinkenlights.android.vanilla.action.PLAY" />
-				<action android:name="ch.blinkenlights.android.vanilla.action.PAUSE" />
-				<action android:name="ch.blinkenlights.android.vanilla.action.TOGGLE_PLAYBACK" />
-				<action android:name="ch.blinkenlights.android.vanilla.action.NEXT_SONG" />
-				<action android:name="ch.blinkenlights.android.vanilla.action.PREVIOUS_SONG" />
+				<action android:name="ru.smartinterestapps.android.vanilla.action.PLAY" />
+				<action android:name="ru.smartinterestapps.android.vanilla.action.PAUSE" />
+				<action android:name="ru.smartinterestapps.android.vanilla.action.TOGGLE_PLAYBACK" />
+				<action android:name="ru.smartinterestapps.android.vanilla.action.NEXT_SONG" />
+				<action android:name="ru.smartinterestapps.android.vanilla.action.PREVIOUS_SONG" />
 			</intent-filter>
 		</service>
 

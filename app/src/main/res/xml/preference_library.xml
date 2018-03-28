@@ -27,8 +27,8 @@ THE SOFTWARE.
 		android:title="@string/tabs"
 		android:summary="@string/customize_tab_order">
 		<intent
-			android:targetPackage="ch.blinkenlights.android.vanilla"
-			android:targetClass="ch.blinkenlights.android.vanilla.TabOrderActivity" />
+			android:targetPackage="ru.smartinterestapps.android.vanilla"
+			android:targetClass="ru.smartinterestapps.android.vanilla.TabOrderActivity" />
 	</PreferenceScreen>
 	<ru.smartinterestapps.android.vanilla.ListPreferenceSummary
 		android:key="default_action_int"
@@ -51,7 +51,7 @@ THE SOFTWARE.
 		android:title="@string/filebrowser_start"
 		android:summary="@string/customize_filebrowser_start">
 		<intent
-			android:targetPackage="ch.blinkenlights.android.vanilla"
-			android:targetClass="ch.blinkenlights.android.vanilla.FilebrowserStartActivity" />
+			android:targetPackage="ru.smartinterestapps.android.vanilla"
+			android:targetClass="ru.smartinterestapps.android.vanilla.FilebrowserStartActivity" />
 	</PreferenceScreen>
 </PreferenceScreen>

@@ -57,7 +57,7 @@ public class PreferencesActivity extends PreferenceActivity
 	/**
 	 * The package name of our external helper app
 	 */
-	private static final String VPLUG_PACKAGE_NAME = "ch.blinkenlights.android.vanillaplug";
+	private static final String VPLUG_PACKAGE_NAME = "ru.smartinterestapps.android.vanillaplug";
 
 	/**
 	 * Initialize the activity, loading the preference specifications.

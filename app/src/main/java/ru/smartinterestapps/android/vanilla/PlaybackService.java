@@ -109,15 +109,15 @@ public final class PlaybackService extends Service
 	/**
 	 * Action for startService: toggle playback on/off.
 	 */
-	public static final String ACTION_TOGGLE_PLAYBACK = "ch.blinkenlights.android.vanilla.action.TOGGLE_PLAYBACK";
+	public static final String ACTION_TOGGLE_PLAYBACK = "ru.smartinterestapps.android.vanilla.action.TOGGLE_PLAYBACK";
 	/**
 	 * Action for startService: start playback if paused.
 	 */
-	public static final String ACTION_PLAY = "ch.blinkenlights.android.vanilla.action.PLAY";
+	public static final String ACTION_PLAY = "ru.smartinterestapps.android.vanilla.action.PLAY";
 	/**
 	 * Action for startService: pause playback if playing.
 	 */
-	public static final String ACTION_PAUSE = "ch.blinkenlights.android.vanilla.action.PAUSE";
+	public static final String ACTION_PAUSE = "ru.smartinterestapps.android.vanilla.action.PAUSE";
 	/**
 	 * Action for startService: toggle playback on/off.
 	 *
@@ -126,18 +126,18 @@ public final class PlaybackService extends Service
 	 * actions are received within 400 ms, the playback activity is opened
 	 * instead.
 	 */
-	public static final String ACTION_TOGGLE_PLAYBACK_DELAYED = "ch.blinkenlights.android.vanilla.action.TOGGLE_PLAYBACK_DELAYED";
+	public static final String ACTION_TOGGLE_PLAYBACK_DELAYED = "ru.smartinterestapps.android.vanilla.action.TOGGLE_PLAYBACK_DELAYED";
 	/**
 	 * Action for startService: toggle playback on/off.
 	 *
 	 * This works the same way as ACTION_PLAY_PAUSE but prevents the notification
 	 * from being hidden regardless of notification visibility settings.
 	 */
-	public static final String ACTION_TOGGLE_PLAYBACK_NOTIFICATION = "ch.blinkenlights.android.vanilla.action.TOGGLE_PLAYBACK_NOTIFICATION";
+	public static final String ACTION_TOGGLE_PLAYBACK_NOTIFICATION = "ru.smartinterestapps.android.vanilla.action.TOGGLE_PLAYBACK_NOTIFICATION";
 	/**
 	 * Action for startService: advance to the next song.
 	 */
-	public static final String ACTION_NEXT_SONG = "ch.blinkenlights.android.vanilla.action.NEXT_SONG";
+	public static final String ACTION_NEXT_SONG = "ru.smartinterestapps.android.vanilla.action.NEXT_SONG";
 	/**
 	 * Action for startService: advance to the next song.
 	 *
@@ -146,41 +146,41 @@ public final class PlaybackService extends Service
 	 * actions are received within 400 ms, the playback activity is opened
 	 * instead.
 	 */
-	public static final String ACTION_NEXT_SONG_DELAYED = "ch.blinkenlights.android.vanilla.action.NEXT_SONG_DELAYED";
+	public static final String ACTION_NEXT_SONG_DELAYED = "ru.smartinterestapps.android.vanilla.action.NEXT_SONG_DELAYED";
 	/**
 	 * Action for startService: advance to the next song.
 	 *
 	 * Like ACTION_NEXT_SONG, but starts playing automatically if paused
 	 * when this is called.
 	 */
-	public static final String ACTION_NEXT_SONG_AUTOPLAY = "ch.blinkenlights.android.vanilla.action.NEXT_SONG_AUTOPLAY";
+	public static final String ACTION_NEXT_SONG_AUTOPLAY = "ru.smartinterestapps.android.vanilla.action.NEXT_SONG_AUTOPLAY";
 	/**
 	 * Action for startService: go back to the previous song.
 	 */
-	public static final String ACTION_PREVIOUS_SONG = "ch.blinkenlights.android.vanilla.action.PREVIOUS_SONG";
+	public static final String ACTION_PREVIOUS_SONG = "ru.smartinterestapps.android.vanilla.action.PREVIOUS_SONG";
 	/**
 	 * Action for startService: go back to the previous song.
 	 *
 	 * Like ACTION_PREVIOUS_SONG, but starts playing automatically if paused
 	 * when this is called.
 	 */
-	public static final String ACTION_PREVIOUS_SONG_AUTOPLAY = "ch.blinkenlights.android.vanilla.action.PREVIOUS_SONG_AUTOPLAY";
+	public static final String ACTION_PREVIOUS_SONG_AUTOPLAY = "ru.smartinterestapps.android.vanilla.action.PREVIOUS_SONG_AUTOPLAY";
 	/**
 	 * Flushes the queue, switches to random mode and starts playing.
 	 */
-	public static final String ACTION_RANDOM_MIX_AUTOPLAY = "ch.blinkenlights.android.vanilla.action.RANDOM_MIX_AUTOPLAY";
+	public static final String ACTION_RANDOM_MIX_AUTOPLAY = "ru.smartinterestapps.android.vanilla.action.RANDOM_MIX_AUTOPLAY";
 	/**
 	 * Change the shuffle mode.
 	 */
-	public static final String ACTION_CYCLE_SHUFFLE = "ch.blinkenlights.android.vanilla.CYCLE_SHUFFLE";
+	public static final String ACTION_CYCLE_SHUFFLE = "ru.smartinterestapps.android.vanilla.CYCLE_SHUFFLE";
 	/**
 	 * Change the repeat mode.
 	 */
-	public static final String ACTION_CYCLE_REPEAT = "ch.blinkenlights.android.vanilla.CYCLE_REPEAT";
+	public static final String ACTION_CYCLE_REPEAT = "ru.smartinterestapps.android.vanilla.CYCLE_REPEAT";
 	/**
 	 * Pause music and hide the notification.
 	 */
-	public static final String ACTION_CLOSE_NOTIFICATION = "ch.blinkenlights.android.vanilla.CLOSE_NOTIFICATION";
+	public static final String ACTION_CLOSE_NOTIFICATION = "ru.smartinterestapps.android.vanilla.CLOSE_NOTIFICATION";
 	/**
 	 * Whether we should create a foreground notification as early as possible.
 	 */
