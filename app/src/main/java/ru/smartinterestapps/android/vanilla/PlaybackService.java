@@ -219,6 +219,10 @@ public final class PlaybackService extends Service
 	 */
 	private static final int MIN_SHAKE_PERIOD = 500;
 	/**
+	 * Minimum time in milliseconds between proximity  actions.
+	 */
+	private static final int MIN_PROXIMA_PERIOD = 350;
+	/**
 	 * Defer entering deep sleep for this time (in ms).
 	 */
 	private static final int SLEEP_STATE_DELAY = 60000;
@@ -2313,20 +2317,23 @@ public final class PlaybackService extends Service
 			// переключение при помощи нажатия на  сенсор приближения
 			if(enable_proximity_track_next)
 			{
-			    if(isproximity!= prev_isproximity)
+			    if(isproximity!= prev_isproximity )
 				{
 					long now = SystemClock.elapsedRealtime();
-					if (now - mLastProximityChangeTime > MIN_SHAKE_PERIOD )
+					long time_diff = now - mLastProximityChangeTime;
+					if (time_diff > MIN_PROXIMA_PERIOD  && time_diff < MIN_PROXIMA_PERIOD*10 ) //  чтобы не переключалось, когда в карман  кладешь
 					{
-						if(isproximity)
+						if(!isproximity)
 						{
 							performAction(Action.NextSong, null); // переключение трека на следующий
 						}
 					}
 				}
+
+
 			}
 			prev_isproximity =  isproximity;
-			mLastProximityChangeTime = SystemClock.elapsedRealtime();;
+			mLastProximityChangeTime = SystemClock.elapsedRealtime();
 		}
 		else
 
