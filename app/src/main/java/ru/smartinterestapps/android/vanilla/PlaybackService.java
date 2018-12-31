@@ -712,6 +712,8 @@ public final class PlaybackService extends Service
 		mp.setDataSource(path);
 		mp.prepare();
 		applyReplayGain(mp);
+		if(!mp.isPlaying())
+			mp.seekTo(load_position());
 	}
 
 	/**
@@ -1735,6 +1737,7 @@ public final class PlaybackService extends Service
 	{
 		if (!mMediaPlayerInitialized)
 			return 0;
+		save_position(mMediaPlayer.getCurrentPosition());
 		return mMediaPlayer.getCurrentPosition();
 	}
 
@@ -2124,6 +2127,58 @@ public final class PlaybackService extends Service
 	{
 		return (state & MASK_SHUFFLE) >> SHIFT_SHUFFLE;
 	}
+
+	public int load_position()
+	{
+		int pos = 0;
+
+		try {
+			DataInputStream in = new DataInputStream(openFileInput(get_state_filename(mCurrentSong)));
+
+			if (in.readLong() == STATE_FILE_MAGIC && in.readInt() == STATE_VERSION) {
+				pos = in.readInt();
+				//mPendingSeekSong = in.readLong();
+
+			}
+
+			in.close();
+		} catch (EOFException e) {
+			Log.w("VanillaMusic", "Failed to load state", e);
+		} catch (IOException e) {
+			Log.w("VanillaMusic", "Failed to load state", e);
+		}
+
+		return pos;
+	}
+
+
+String get_state_filename(Song s)
+{
+	if(s == null) return "";
+	String res = s.path;
+	res = res.replaceAll("/","_");
+	return res;
+}
+	public void save_position(int pendingSeek)
+	{
+		try {
+			DataOutputStream out = new DataOutputStream(openFileOutput(get_state_filename(mCurrentSong), 0));
+			Song song = mCurrentSong;
+			out.writeLong(STATE_FILE_MAGIC);
+			out.writeInt(STATE_VERSION);
+			if(pendingSeek/1000 == mCurrentSong.duration/1000)
+				pendingSeek = 0;
+			//Log.d("SAV","pos"+pendingSeek+" d "+mCurrentSong.duration);
+			out.writeInt(pendingSeek);
+			//out.writeLong(song == null ? -1 : song.id);
+			out.close();
+		} catch (IOException e) {
+			Log.w("VanillaMusic", "Failed to save state", e);
+		}
+	}
+
+
+
 
 	/**
 	 * Returns the finish action for the given state.
