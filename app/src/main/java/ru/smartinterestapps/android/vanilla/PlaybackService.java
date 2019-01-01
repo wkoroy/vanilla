@@ -2148,6 +2148,10 @@ public final class PlaybackService extends Service
 			Log.w("VanillaMusic", "Failed to load state", e);
 		}
 
+		if(pos/1000 == mCurrentSong.duration/1000 ||
+			pos/1000 == (mCurrentSong.duration/1000) -1
+		  )
+			                                 pos = 0;
 		return pos;
 	}
 
