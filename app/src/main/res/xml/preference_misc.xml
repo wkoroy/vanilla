@@ -45,6 +45,13 @@ THE SOFTWARE.
 		android:key="use_idle_timeout_ifnoactive"
 		android:summary="Останавливать воспороизведение через заданное время, если смартфон не брали в руки или не ходили/не бегали с ним"
 		android:title="Задействовать таймер неактивности" />
+	<CheckBoxPreference
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:defaultValue="true"
+		android:key="using_bookmarks_position"
+		android:summary="Сохранять позицию воспроизведения для каждого из треков"
+		android:title="Сохранять позицию воспроизведения " />
 	<ru.smartinterestapps.android.vanilla.IdlePreference
 		android:id="@+id/idle_noact_Preference"
 		android:layout_width="wrap_content"

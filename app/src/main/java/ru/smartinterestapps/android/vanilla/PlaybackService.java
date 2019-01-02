@@ -335,6 +335,12 @@ public final class PlaybackService extends Service
 	 */
 	private int mIdleNoactiveTimeout;
 
+
+	/**
+	 * Using bookmarks of position for every tracks
+	 */
+	private boolean mUsingBookmarks;
+
 	/**
 	 * The intent for the notification to execute, created by
 	 * {@link PlaybackService#createNotificationAction(SharedPreferences)}.
@@ -505,7 +511,7 @@ public final class PlaybackService extends Service
 		//set_NoMAX_VOL();
 		enable_defer_stop = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT);
 		mIdleNoactiveTimeout  = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT) ? settings.getInt(PrefKeys.IDLE_NOACTIVE_TIMEOUT, PrefDefaults.IDLE_NOACTIVE_TIMEOUT) : 0;
-
+		mUsingBookmarks =  settings.getBoolean(PrefKeys.USE_BOKMARKS_POSITION, true);
 
 		mHeadsetPause = getSettings(this).getBoolean(PrefKeys.HEADSET_PAUSE, PrefDefaults.HEADSET_PAUSE);
 		mShakeAction = settings.getBoolean(PrefKeys.ENABLE_SHAKE, PrefDefaults.ENABLE_SHAKE) ? Action.getAction(settings, PrefKeys.SHAKE_ACTION, PrefDefaults.SHAKE_ACTION) : Action.Nothing;
@@ -711,9 +717,13 @@ public final class PlaybackService extends Service
 	public void prepareMediaPlayer(VanillaMediaPlayer mp, String path) throws IOException{
 		mp.setDataSource(path);
 		mp.prepare();
-		applyReplayGain(mp);
-		if(!mp.isPlaying())
+
+		if(!mp.isPlaying() && mUsingBookmarks)
+		{
 			mp.seekTo(load_position());
+		}
+
+		applyReplayGain(mp);
 	}
 
 	/**
@@ -938,6 +948,10 @@ public final class PlaybackService extends Service
 		}
 		else if (PrefKeys.PROXIMITY_SWITCH_TRACK.equals(key) ) {
 			enable_proximity_track_next = settings.getBoolean(PrefKeys.PROXIMITY_SWITCH_TRACK, PrefDefaults.PROXIMITY_SWITCH_TRACK);
+		}
+		else if( PrefKeys.USE_BOKMARKS_POSITION.equals(key) )
+		{
+			mUsingBookmarks =  settings.getBoolean(PrefKeys.USE_BOKMARKS_POSITION, true);
 		}
 		//////////////////////////////////////////
 		else if (PrefKeys.HEADSET_PAUSE.equals(key)) {
@@ -1468,6 +1482,9 @@ public final class PlaybackService extends Service
 			mHandler.removeMessages(MSG_GAPLESS_UPDATE);
 			mHandler.sendEmptyMessage(MSG_GAPLESS_UPDATE);
 
+			mHandler.removeMessages(MSG_SET_SAVE_POSITION);
+			mHandler.sendEmptyMessage(MSG_SET_SAVE_POSITION);
+
 			if (mPendingSeek != 0) {
 				if (mPendingSeekSong == song.id)
 					mMediaPlayer.seekTo(mPendingSeek);
@@ -1625,6 +1642,7 @@ public final class PlaybackService extends Service
 	private static final int MSG_UPDATE_PLAYCOUNTS = 17;
 	private static final int MSG_SHOW_TOAST = 18;
 
+	private static final int MSG_SET_SAVE_POSITION = 27;
 	@Override
 	public boolean handleMessage(Message message)
 	{
@@ -1687,7 +1705,14 @@ public final class PlaybackService extends Service
 			break;
 		case MSG_GAPLESS_UPDATE:
 			triggerGaplessUpdate();
+
 			break;
+			case	MSG_SET_SAVE_POSITION:
+				//if(!mMediaPlayer.isPlaying())
+				{
+					mMediaPlayer.seekTo(load_position());
+				}
+				break;
 		case MSG_UPDATE_PLAYCOUNTS:
 			Song song = (Song)message.obj;
 			boolean played = message.arg1 == 1;

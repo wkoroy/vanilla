@@ -31,6 +31,7 @@ public class PrefKeys {
 	public static final String VOLUME_SWITCH_TRACK = "volume_switch_track";
 	public static final String USE_IDLE_NOACTIVE_TIMEOUT = "use_idle_timeout_ifnoactive";
 	public static final String IDLE_NOACTIVE_TIMEOUT = "idle_timeout_ifnoactive";
+	public static final String USE_BOKMARKS_POSITION = "using_bookmarks_position";
 
 	public static final String COVER_LONGPRESS_ACTION = "cover_longpress_action";
 	public static final String COVER_PRESS_ACTION = "cover_press_action";
