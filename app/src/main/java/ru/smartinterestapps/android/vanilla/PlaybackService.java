@@ -717,12 +717,6 @@ public final class PlaybackService extends Service
 	public void prepareMediaPlayer(VanillaMediaPlayer mp, String path) throws IOException{
 		mp.setDataSource(path);
 		mp.prepare();
-
-		if(!mp.isPlaying() && mUsingBookmarks)
-		{
-			mp.seekTo(load_position());
-		}
-
 		applyReplayGain(mp);
 	}
 
@@ -1482,8 +1476,12 @@ public final class PlaybackService extends Service
 			mHandler.removeMessages(MSG_GAPLESS_UPDATE);
 			mHandler.sendEmptyMessage(MSG_GAPLESS_UPDATE);
 
-			mHandler.removeMessages(MSG_SET_SAVE_POSITION);
-			mHandler.sendEmptyMessage(MSG_SET_SAVE_POSITION);
+
+			int track_position = load_position();
+			if(track_position >0)
+			{
+				mMediaPlayer.seekTo(track_position);
+			}
 
 			if (mPendingSeek != 0) {
 				if (mPendingSeekSong == song.id)
@@ -1642,7 +1640,6 @@ public final class PlaybackService extends Service
 	private static final int MSG_UPDATE_PLAYCOUNTS = 17;
 	private static final int MSG_SHOW_TOAST = 18;
 
-	private static final int MSG_SET_SAVE_POSITION = 27;
 	@Override
 	public boolean handleMessage(Message message)
 	{
@@ -1707,12 +1704,6 @@ public final class PlaybackService extends Service
 			triggerGaplessUpdate();
 
 			break;
-			case	MSG_SET_SAVE_POSITION:
-				//if(!mMediaPlayer.isPlaying())
-				{
-					mMediaPlayer.seekTo(load_position());
-				}
-				break;
 		case MSG_UPDATE_PLAYCOUNTS:
 			Song song = (Song)message.obj;
 			boolean played = message.arg1 == 1;
@@ -2153,16 +2144,17 @@ public final class PlaybackService extends Service
 		return (state & MASK_SHUFFLE) >> SHIFT_SHUFFLE;
 	}
 
+	/**
+	 * Returns the current saved position for current selected track.
+	 */
 	public int load_position()
 	{
 		int pos = 0;
 
 		try {
 			DataInputStream in = new DataInputStream(openFileInput(get_state_filename(mCurrentSong)));
-
 			if (in.readLong() == STATE_FILE_MAGIC && in.readInt() == STATE_VERSION) {
 				pos = in.readInt();
-				//mPendingSeekSong = in.readLong();
 
 			}
 
@@ -2180,7 +2172,10 @@ public final class PlaybackService extends Service
 		return pos;
 	}
 
-
+	/**
+	 * Returns the unically string for  Song object.
+	 * @return unically string for  Song object.
+	 */
 String get_state_filename(Song s)
 {
 	if(s == null) return "";
@@ -2188,6 +2183,10 @@ String get_state_filename(Song s)
 	res = res.replaceAll("/","_");
 	return res;
 }
+
+	/**
+	 * Save  the pendingSeek  position for current selected track.
+	 */
 	public void save_position(int pendingSeek)
 	{
 		try {
