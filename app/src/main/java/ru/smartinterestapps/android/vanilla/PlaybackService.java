@@ -1478,7 +1478,7 @@ public final class PlaybackService extends Service
 
 
 			int track_position = load_position();
-			if(track_position >0)
+			if(track_position >0 && mUsingBookmarks)
 			{
 				mMediaPlayer.seekTo(track_position);
 			}
