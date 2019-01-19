@@ -664,7 +664,7 @@ public class LibraryActivity
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item)
+	public boolean onContextItemSelected(MenuItem item)////////  меню для файлового айтемса
 	{
 		if (item.getGroupId() != 0)
 			return super.onContextItemSelected(item);

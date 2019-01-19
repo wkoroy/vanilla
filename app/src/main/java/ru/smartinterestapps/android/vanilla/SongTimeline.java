@@ -733,7 +733,7 @@ public final class SongTimeline {
 	 * to be initialized depending on the given mode.
 	 * @return The number of songs that were added.
 	 */
-	public int addSongs(Context context, QueryTask query)
+	public int addSongs(Context context, QueryTask query)// обработка добавляемых песен
 	{
 		Cursor cursor = query.runQuery(context);
 		if (cursor == null) {
