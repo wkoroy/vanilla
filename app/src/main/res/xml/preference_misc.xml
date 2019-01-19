@@ -36,7 +36,7 @@ THE SOFTWARE.
 		android:layout_height="wrap_content"
 		android:defaultValue="true"
 		android:key="volume_switch_track"
-		android:summary="Переключение треков при помощи клавиш кромкости (-) следующий трек , (+)  предыдущий"
+		android:summary="Переключение треков при помощи клавиш @string/last_used_actionромкости (-) следующий трек , (+)  предыдущий"
 		android:title="Переключение треков громкостью" />
 	<CheckBoxPreference
 		android:layout_width="wrap_content"
