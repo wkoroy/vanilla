@@ -36,6 +36,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -46,7 +47,6 @@ import android.hardware.SensorManager;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -69,7 +69,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -330,6 +329,9 @@ public final class PlaybackService extends Service
 	private int mIdleTimeout;
 
 
+	boolean sens_ligthcap =false;
+	boolean sens_proxcap =false;
+	float prev_light_data =0.0f;
 	/**
 	 * The time to wait before considering the player idle.
 	 */
@@ -926,6 +928,11 @@ public final class PlaybackService extends Service
 			 mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
 
 		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),SensorManager.SENSOR_DELAY_NORMAL);
+		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),SensorManager.SENSOR_DELAY_FASTEST );
+
+		PackageManager PM= this.getPackageManager();
+		sens_ligthcap= PM.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT);
+		sens_proxcap = PM.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY);
 	}
 
 
@@ -2386,37 +2393,23 @@ String get_state_filename(Song s)
 	@Override
 	public void onSensorChanged(SensorEvent se)
 	{
-
-		if (se.sensor.getType() == Sensor.TYPE_PROXIMITY)
+		if (se.sensor.getType() == Sensor.TYPE_PROXIMITY ||
+			se.sensor.getType() == Sensor.TYPE_LIGHT )
 		{
-			if( se.values[0] == 0){
-				isproximity =  true;
-
-				set_NoMAX_VOL();
-
-			}
-			else  isproximity =  false;
-
-			// переключение при помощи нажатия на  сенсор приближения
-			if(enable_proximity_track_next)
-			{
-			    if(isproximity!= prev_isproximity )
+			Log.d("LIGHTDDD" , " "+se.values[0] +" delta "+(-prev_light_data + se.values[0]));
+			if(se.sensor.getType() == Sensor.TYPE_LIGHT  && sens_ligthcap && !sens_proxcap) {
+				//if(se.values[0] < 9)
+				//se.values[0] = 0;
+                if( Math.abs(-prev_light_data + se.values[0])>9 || se.values[0] <= 0)
 				{
-					long now = SystemClock.elapsedRealtime();
-					long time_diff = now - mLastProximityChangeTime;
-					if (time_diff > MIN_PROXIMA_PERIOD  && time_diff < MIN_PROXIMA_PERIOD*10 ) //  чтобы не переключалось, когда в карман  кладешь
-					{
-						if(!isproximity)
-						{
-							performAction(Action.NextSong, null); // переключение трека на следующий
-						}
-					}
+					if(prev_light_data > se.values[0])
+											se.values[0] = 0;
+					event_eclipse_sensors(se.values[0]);
 				}
 
-
+				prev_light_data = se.values[0];
 			}
-			prev_isproximity =  isproximity;
-			mLastProximityChangeTime = SystemClock.elapsedRealtime();
+
 		}
 		else
 
@@ -2452,6 +2445,37 @@ String get_state_filename(Song s)
 			}
 
 		}
+	}
+
+	private void event_eclipse_sensors(float value) {
+		if( value == 0){
+			isproximity =  true;
+
+			set_NoMAX_VOL();
+
+		}
+		else  isproximity =  false;
+
+		// переключение при помощи нажатия на  сенсор приближения
+		if(enable_proximity_track_next)
+		{
+			if(isproximity!= prev_isproximity )
+			{
+				long now = SystemClock.elapsedRealtime();
+				long time_diff = now - mLastProximityChangeTime;
+				if (time_diff > MIN_PROXIMA_PERIOD  && time_diff < MIN_PROXIMA_PERIOD*10 ) //  чтобы не переключалось, когда в карман  кладешь
+				{
+					if(!isproximity)
+					{
+						performAction(Action.NextSong, null); // переключение трека на следующий
+					}
+				}
+			}
+
+
+		}
+		prev_isproximity =  isproximity;
+		mLastProximityChangeTime = SystemClock.elapsedRealtime();
 	}
 
 	@Override

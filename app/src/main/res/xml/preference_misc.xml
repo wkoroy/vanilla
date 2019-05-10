@@ -57,7 +57,7 @@ THE SOFTWARE.
 	<CheckBoxPreference
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:defaultValue="true"
+		android:defaultValue="false"
 		android:key="using_bookmarks_position"
 		android:summary="Сохранять позицию воспроизведения для каждого из треков"
 		android:title="Сохранять позицию воспроизведения " />
