@@ -513,7 +513,7 @@ public final class PlaybackService extends Service
 		//set_NoMAX_VOL();
 		enable_defer_stop = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT);
 		mIdleNoactiveTimeout  = settings.getBoolean(PrefKeys.USE_IDLE_NOACTIVE_TIMEOUT, PrefDefaults.USE_IDLE_NOACTIVE_TIMEOUT) ? settings.getInt(PrefKeys.IDLE_NOACTIVE_TIMEOUT, PrefDefaults.IDLE_NOACTIVE_TIMEOUT) : 0;
-		mUsingBookmarks =  settings.getBoolean(PrefKeys.USE_BOKMARKS_POSITION, true);
+		mUsingBookmarks =  settings.getBoolean(PrefKeys.USE_BOKMARKS_POSITION, PrefDefaults.USE_BOKMARKS_POSITION);
 
 		mHeadsetPause = getSettings(this).getBoolean(PrefKeys.HEADSET_PAUSE, PrefDefaults.HEADSET_PAUSE);
 		mShakeAction = settings.getBoolean(PrefKeys.ENABLE_SHAKE, PrefDefaults.ENABLE_SHAKE) ? Action.getAction(settings, PrefKeys.SHAKE_ACTION, PrefDefaults.SHAKE_ACTION) : Action.Nothing;
@@ -927,12 +927,12 @@ public final class PlaybackService extends Service
 		if(enable_defer_stop)
 			 mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
 
-		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),SensorManager.SENSOR_DELAY_NORMAL);
-		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),SensorManager.SENSOR_DELAY_FASTEST );
-
 		PackageManager PM= this.getPackageManager();
 		sens_ligthcap= PM.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT);
 		sens_proxcap = PM.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY);
+
+		if(sens_proxcap) mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),SensorManager.SENSOR_DELAY_NORMAL);
+		if(!sens_proxcap && sens_ligthcap)mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),SensorManager.SENSOR_DELAY_FASTEST );
 	}
 
 
@@ -2408,7 +2408,8 @@ String get_state_filename(Song s)
 				}
 
 				prev_light_data = se.values[0];
-			}
+			}else
+				event_eclipse_sensors(se.values[0]);
 
 		}
 		else
